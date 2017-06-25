@@ -16,7 +16,7 @@ doWatch = ->
             pkg = JSON.parse res.body
             fs.readFile "#{watchItem.dir}/package.json", 'utf-8', (err, res) ->
               if not err
-                localPkg = JSON.parse res.body
+                localPkg = JSON.parse res
                 if pkg.version isnt localPkg.version
                   console.log 'restarting', watchItem.dir
                   process.chdir watchItem.dir

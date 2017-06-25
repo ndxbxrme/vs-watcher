@@ -24,7 +24,7 @@
               return fs.readFile(watchItem.dir + "/package.json", 'utf-8', function(err, res) {
                 var localPkg;
                 if (!err) {
-                  localPkg = JSON.parse(res.body);
+                  localPkg = JSON.parse(res);
                   if (pkg.version !== localPkg.version) {
                     console.log('restarting', watchItem.dir);
                     process.chdir(watchItem.dir);
