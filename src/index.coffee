@@ -14,13 +14,14 @@ doWatch = ->
         request.get watchItem.packageUrl, (err, res) ->
           if not err
             pkg = JSON.parse res.body
-            if pkg.version isnt watchItem.version
-              console.log 'restarting', watchItem.dir
-              watchItem.version = pkg.version
-              fs.writeFileSync 'watch-list.json', JSON.stringify(watchList), 'utf-8'
-              process.chdir watchItem.dir
-              spawn.sync '.', ['init-all.sh'], stdio: 'inherit'
-          callback()
+            fs.readFile "#{watchItem.dir}/package.json", 'utf-8', (err, res) ->
+              if not err
+                localPkg = JSON.parse res.body
+                if pkg.version isnt localPkg.version
+                  console.log 'restarting', watchItem.dir
+                  process.chdir watchItem.dir
+                  spawn.sync '.', ['init-all.sh'], stdio: 'inherit'
+              callback()
             
 setInterval doWatch, .5 * 60 * 1000
 doWatch()

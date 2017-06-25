@@ -21,17 +21,21 @@
             var pkg;
             if (!err) {
               pkg = JSON.parse(res.body);
-              if (pkg.version !== watchItem.version) {
-                console.log('restarting', watchItem.dir);
-                watchItem.version = pkg.version;
-                fs.writeFileSync('watch-list.json', JSON.stringify(watchList), 'utf-8');
-                process.chdir(watchItem.dir);
-                spawn.sync('.', ['init-all.sh'], {
-                  stdio: 'inherit'
-                });
-              }
+              return fs.readFile(watchItem.dir + "/package.json", 'utf-8', function(err, res) {
+                var localPkg;
+                if (!err) {
+                  localPkg = JSON.parse(res.body);
+                  if (pkg.version !== localPkg.version) {
+                    console.log('restarting', watchItem.dir);
+                    process.chdir(watchItem.dir);
+                    spawn.sync('.', ['init-all.sh'], {
+                      stdio: 'inherit'
+                    });
+                  }
+                }
+                return callback();
+              });
             }
-            return callback();
           });
         });
       }
