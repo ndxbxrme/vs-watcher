@@ -10,10 +10,12 @@ doWatch = ->
     if not err
       watchList = JSON.parse res
       async.eachSeries watchList, (watchItem, callback) ->
+        console.log 'watching', watchItem.dir
         request.get watchItem.packageUrl, (err, res) ->
           if not err
             pkg = JSON.parse req.body
             if pkg.version isnt watchItem.version
+              console.log 'restarting', watchItem.dir
               watchItem.version = pkg.version
               fs.writeFileSync 'watch-list.json', JSON.stringify(watchList), 'utf-8'
               process.chdir watchItem.dir

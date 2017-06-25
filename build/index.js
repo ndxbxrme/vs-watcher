@@ -16,11 +16,13 @@
       if (!err) {
         watchList = JSON.parse(res);
         return async.eachSeries(watchList, function(watchItem, callback) {
+          console.log('watching', watchItem.dir);
           return request.get(watchItem.packageUrl, function(err, res) {
             var pkg;
             if (!err) {
               pkg = JSON.parse(req.body);
               if (pkg.version !== watchItem.version) {
+                console.log('restarting', watchItem.dir);
                 watchItem.version = pkg.version;
                 fs.writeFileSync('watch-list.json', JSON.stringify(watchList), 'utf-8');
                 process.chdir(watchItem.dir);
