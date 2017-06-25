@@ -1,0 +1,31 @@
+{
+  "name": "vs-watcher",
+  "version": "0.0.1",
+  "description": "",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "node build/test.js"
+  },
+  "ndx": true,
+  "loadOrder": 5,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ndxbxrme/vs-watcher"
+  },
+  "author": "ndxbxrme",
+  "license": "MIT",
+  "homepage": "https://github.com/ndxbxrme/vs-watcher",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-coffee": "^1.0.0",
+    "grunt-contrib-nodeunit": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "load-grunt-tasks": "^3.5.2"
+  },
+  "dependencies": {
+    "async": "^2.4.1",
+    "cross-spawn": "^5.1.0"
+  }
+}
