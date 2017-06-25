@@ -20,7 +20,7 @@
           return request.get(watchItem.packageUrl, function(err, res) {
             var pkg;
             if (!err) {
-              pkg = JSON.parse(req.body);
+              pkg = JSON.parse(res.body);
               if (pkg.version !== watchItem.version) {
                 console.log('restarting', watchItem.dir);
                 watchItem.version = pkg.version;
