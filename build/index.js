@@ -25,12 +25,11 @@
                 var localPkg;
                 if (!err) {
                   localPkg = JSON.parse(res);
+                  console.log("local " + localPkg.version + ", remote " + pkg.version);
                   if (pkg.version !== localPkg.version) {
                     console.log('restarting', watchItem.dir);
                     process.chdir(watchItem.dir);
-                    spawn.sync('.', ['init-all.sh'], {
-                      stdio: 'inherit'
-                    });
+                    spawn.sync("cd " + watchItem.dir + " && . init-all.sh");
                   }
                 }
                 return callback();

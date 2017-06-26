@@ -17,10 +17,11 @@ doWatch = ->
             fs.readFile "#{watchItem.dir}/package.json", 'utf-8', (err, res) ->
               if not err
                 localPkg = JSON.parse res
+                console.log "local #{localPkg.version}, remote #{pkg.version}"
                 if pkg.version isnt localPkg.version
                   console.log 'restarting', watchItem.dir
                   process.chdir watchItem.dir
-                  spawn.sync '.', ['init-all.sh'], stdio: 'inherit'
+                  spawn.sync "cd #{watchItem.dir} && . init-all.sh"
               callback()
             
 setInterval doWatch, .5 * 60 * 1000
